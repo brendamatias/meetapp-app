@@ -1,16 +1,15 @@
 import React from 'react';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Background from '~/components/Background';
 
-export default function Dashboard() {
+export default function Subscriptions() {
   return <Background />;
 }
 
-Dashboard.navigationOptions = {
-  tabBarLabel: 'Meetups',
+Subscriptions.navigationOptions = {
+  tabBarLabel: 'Subscriptions',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="format-list-bulleted" size={20} color={tintColor} />
+    <Icon name="local-offer" size={20} color={tintColor} />
   ),
 };
