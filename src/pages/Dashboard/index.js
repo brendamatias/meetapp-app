@@ -1,14 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Alert } from 'react-native';
-import {
-  parseISO,
-  format,
-  subDays,
-  addDays,
-  isBefore,
-  startOfDay,
-} from 'date-fns';
+import { format, subDays, addDays, isBefore, startOfDay } from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
 
 import api from '~/services/api';
@@ -60,22 +53,9 @@ export default function Dashboard() {
         params: { date, page },
       });
 
-      setMeetups(oldMeetups =>
-        oldMeetups.concat(
-          response.data
-            .filter(meetup => !meetup.subscribed)
-            .map(meetup => ({
-              ...meetup,
-              formattedDate: format(
-                parseISO(meetup.date),
-                "dd' de 'MMMM', at 'H'h'",
-                { locale: pt }
-              ),
-            }))
-        )
-      );
+      setMeetups(response.data);
 
-      setHasMore(response.data.length > 0);
+      setHasMore(response.data.length >= 10);
       setLoading(false);
       setRefreshing(false);
 
@@ -93,7 +73,7 @@ export default function Dashboard() {
 
   async function handleSubscribe(id) {
     try {
-      const response = await api.post(`meetups/${id}/subscriptions`);
+      const response = await api.post(`subscriptions/${id}`);
 
       Alert.alert(
         'Success',

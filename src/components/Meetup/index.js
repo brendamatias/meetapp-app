@@ -1,5 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { parseISO, format } from 'date-fns';
+import us from 'date-fns/locale/en-US';
 
 import {
   Container,
@@ -13,6 +15,10 @@ import {
 } from './styles';
 
 export default function Meetup({ data, handleSubscribe, handleUnsubscribe }) {
+  const formattedDate = format(parseISO(data.date), "MMMM dd', at' H:mm aa", {
+    locale: us,
+  });
+
   return (
     <Container>
       <File
@@ -24,7 +30,7 @@ export default function Meetup({ data, handleSubscribe, handleUnsubscribe }) {
         <Title>{data.title}</Title>
         <Row>
           <Icon name="event" color="#999" />
-          <Info>{data.formattedDate}</Info>
+          <Info>{formattedDate}</Info>
         </Row>
         <Row>
           <Icon name="location-on" size={12} color="#999" />
