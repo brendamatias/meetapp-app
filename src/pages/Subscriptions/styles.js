@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import Button from '~/components/Button';
+
 export const Container = styled.SafeAreaView`
   flex: 1;
   margin-top: 30px;
@@ -20,4 +22,8 @@ export const EmptyText = styled.Text`
   color: rgba(255, 255, 255, 0.5);
   margin-top: 10px;
   font-size: 14px;
+`;
+
+export const RefreshButton = styled(Button)`
+  margin-top: 5px;
 `;

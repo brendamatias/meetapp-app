@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { withNavigationFocus } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Alert } from 'react-native';
 import { format, subDays, addDays, isBefore, startOfDay } from 'date-fns';
@@ -22,7 +23,7 @@ import {
   EmptyText,
 } from './styles';
 
-export default function Dashboard() {
+function Dashboard({ isFocused }) {
   const [loading, setLoading] = useState(true);
 
   const [date, setDate] = useState(new Date());
@@ -46,6 +47,10 @@ export default function Dashboard() {
   }, [date]);
 
   useEffect(() => {
+    if (!isFocused) {
+      return;
+    }
+
     async function loadMeetups() {
       setLoading(true);
 
@@ -63,7 +68,7 @@ export default function Dashboard() {
     }
 
     loadMeetups();
-  }, [date, page, refreshCount]);
+  }, [date, isFocused, page, refreshCount]);
 
   async function handleRefresh() {
     setRefreshing(true);
@@ -145,3 +150,5 @@ Dashboard.navigationOptions = {
     <Icon name="format-list-bulleted" size={20} color={tintColor} />
   ),
 };
+
+export default withNavigationFocus(Dashboard);

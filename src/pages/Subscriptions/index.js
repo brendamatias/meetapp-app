@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { withNavigationFocus } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Alert } from 'react-native';
 
@@ -12,7 +13,7 @@ import Meetup from '~/components/Meetup';
 
 import { Container, List, Empty, EmptyText } from './styles';
 
-export default function Subscriptions() {
+function Subscriptions({ isFocused }) {
   const [loading, setLoading] = useState(true);
 
   const [meetups, setMeetups] = useState([]);
@@ -21,6 +22,10 @@ export default function Subscriptions() {
   const [refreshCount, setRefreshCount] = useState(0);
 
   useEffect(() => {
+    if (!isFocused) {
+      return;
+    }
+
     async function loadMeetups() {
       setLoading(true);
 
@@ -35,7 +40,7 @@ export default function Subscriptions() {
     }
 
     loadMeetups();
-  }, [refreshCount]);
+  }, [isFocused, refreshCount]);
 
   async function handleRefresh() {
     setRefreshing(true);
@@ -98,3 +103,5 @@ Subscriptions.navigationOptions = {
     <Icon name="local-offer" size={20} color={tintColor} />
   ),
 };
+
+export default withNavigationFocus(Subscriptions);
