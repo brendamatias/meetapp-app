@@ -6,6 +6,7 @@ import Background from '~/components/Background';
 import Header from '~/components/Header';
 
 import { updateProfileRequest } from '~/store/modules/user/actions';
+import { signOut } from '~/store/modules/auth/actions';
 
 import {
   Container,
@@ -47,6 +48,10 @@ export default function Profile({ navigation }) {
         confirmPassword,
       })
     );
+  }
+
+  function handleLogout() {
+    dispatch(signOut());
   }
 
   return (
@@ -109,7 +114,7 @@ export default function Profile({ navigation }) {
           />
 
           <SubmitButton onPress={handleSubmit}>Update profile</SubmitButton>
-          <LogoutButton>Logout</LogoutButton>
+          <LogoutButton onPress={handleLogout}>Logout</LogoutButton>
         </Form>
       </Container>
     </Background>
